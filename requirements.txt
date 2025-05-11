@@ -1,0 +1,40 @@
+# Core Dependencies
+langchain>=0.0.200
+openai>=0.27.0
+fastapi>=0.68.0
+uvicorn>=0.15.0
+pydantic>=2.0.0
+python-dotenv>=0.19.0
+
+# Database & Storage
+redis>=4.5.0
+faiss-cpu>=1.7.0
+chromadb>=0.3.0
+
+# Security Tools
+python-whois>=0.7.0
+shodan>=1.28.0
+python-nmap>=0.7.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.18.0
+pytest-cov>=3.0.0
+aioresponses>=0.7.0
+
+# Utilities
+pyyaml>=6.0.0
+python-jose[cryptography]>=3.3.0
+sentry-sdk>=1.5.0
+structlog>=22.1.0
+
+# Documentation
+mkdocs>=1.2.0
+mkdocs-material>=8.0.0
+
+# Development
+black>=22.0.0
+flake8>=4.0.0
+isort>=5.10.0
+mypy>=0.950
+pre-commit>=2.17.0

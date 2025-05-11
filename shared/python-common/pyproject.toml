@@ -1,0 +1,7 @@
+[tool.poetry]
+name = "cybersage-common"
+version = "0.1.0"
+description = "Common utilities for CyberSage services"
+
+[tool.poetry.dependencies]
+python = "^3.9"

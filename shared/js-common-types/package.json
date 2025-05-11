@@ -1,0 +1,9 @@
+{
+  "name": "@cybersage/common-types",
+  "version": "0.1.0",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  }
+}

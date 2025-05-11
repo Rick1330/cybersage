@@ -1,0 +1,61 @@
+---
+# Application Settings
+app:
+  name: cybersage
+  version: "1.0.0"
+  environment: "development"
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+  rate_limit:
+    requests: 100
+    window_seconds: 60
+
+# Service Configuration
+services:
+  openai:
+    model: "gpt-4"
+    temperature: 0.7
+    max_tokens: 1000
+  
+  redis:
+    url: "redis://localhost:6379"
+    ttl: 3600  # 1 hour
+  
+  vector_store:
+    engine: "faiss"  # or "pinecone"
+    embedding_model: "text-embedding-ada-002"
+    index_path: "data/embeddings"
+
+# Security Settings
+security:
+  jwt_secret: "${JWT_SECRET}"
+  token_expiry: 86400  # 24 hours
+  allowed_tools:
+    - nmap_tool
+    - whois_tool
+    - shodan_tool
+
+# Tool Configuration
+tools:
+  nmap:
+    timeout: 300
+    allowed_scan_types:
+      - basic
+      - service
+      - script
+  
+  shodan:
+    rate_limit: 1000
+    cache_ttl: 3600
+
+# Monitoring
+monitoring:
+  sentry_dsn: "${SENTRY_DSN}"
+  log_level: "INFO"
+  metrics_enabled: true
