@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CyberSage Workflow Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the workflow"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the workflow"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the workflow"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "required": ["id", "name", "type"]
+      }
+    }
+  },
+  "required": ["name", "version", "steps"]
+}
