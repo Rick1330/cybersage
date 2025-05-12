@@ -1,0 +1,80 @@
+name: ✨ Feature Request
+description: Suggest an idea, enhancement, or new feature for CyberSage
+title: "[Feature]: <A brief description of the feature>"
+labels: ["enhancement", "feature"]
+assignees:
+  - rick1330
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an idea to improve CyberSage! Please provide details below.
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+      description: A clear and concise description of what the problem is.
+      placeholder: "It's currently difficult to integrate results from tool X into a workflow because..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution-description
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
+      placeholder: "I would like CyberSage to have a dedicated tool wrapper for tool X that parses its output into a standard JSON format..."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+      placeholder: "I considered manually scripting the integration, but a built-in wrapper would be more robust..."
+    validations:
+      required: false
+  - type: textarea
+    id: benefits
+    attributes:
+      label: What are the potential benefits of this feature?
+      description: How would this feature improve CyberSage or help users?
+      placeholder: "This would allow users to easily incorporate tool X into automated workflows, saving time and improving analysis consistency."
+    validations:
+      required: false
+  - type: dropdown
+    id: component
+    attributes:
+      label: Relevant Component(s)
+      description: Which part(s) of CyberSage would this feature affect?
+      multiple: true
+      options:
+        - API (interfaces/api)
+        - API Gateway (api-gateway)
+        - CLI (interfaces/cli)
+        - Core Logic (core/)
+        - Core Service (specify below)
+        - Platform Service (specify below)
+        - New Tool Wrapper
+        - New Tool Runtime
+        - Web UI (ui-web)
+        - Mobile UI (ui-mobile)
+        - Documentation
+        - Workflows
+        - Other (specify below)
+    validations:
+      required: false
+  - type: input
+    id: component-details
+    attributes:
+      label: Specific Component Details (if applicable)
+      description: If you selected 'Core Service', 'Platform Service', or 'Other', please specify.
+      placeholder: "e.g., Workflow Engine Service, Configuration Service"
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or links relevant to the feature request here.
+    validations:
+      required: false
