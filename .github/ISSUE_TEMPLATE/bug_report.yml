@@ -1,0 +1,96 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior in CyberSage
+title: "[Bug]: <A brief description of the bug>"
+labels: ["bug", "triage"]
+assignees:
+  - rick1330
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to fill out this bug report! Please provide as much detail as possible.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "When I try to run an Nmap scan on X target, it fails with error Y..."
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Provide detailed steps to reliably reproduce the behavior.
+      placeholder: |
+        1. Start CyberSage using `docker-compose up -d`.
+        2. Run the CLI command `python interfaces/cli.py scan --target ...`
+        3. Observe the error message...
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "I expected the scan to complete and show the open ports."
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include error messages, logs, or screenshots if possible.
+      placeholder: "The command failed immediately with a 'Connection Refused' error in the logs..."
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component(s)
+      description: Which part(s) of CyberSage seem to be affected?
+      multiple: true
+      options:
+        - API (interfaces/api)
+        - API Gateway (api-gateway)
+        - CLI (interfaces/cli)
+        - Core Logic (core/)
+        - Core Service (specify below)
+        - Platform Service (specify below)
+        - Tool Wrapper (specify below)
+        - Tool Runtime (specify below)
+        - Web UI (ui-web)
+        - Mobile UI (ui-mobile)
+        - Documentation
+        - Installation/Setup
+        - Other (specify below)
+    validations:
+      required: false
+  - type: input
+    id: component-details
+    attributes:
+      label: Specific Component Details (if applicable)
+      description: If you selected 'Core Service', 'Platform Service', 'Tool Wrapper', 'Tool Runtime', or 'Other', please specify which one(s).
+      placeholder: "e.g., Nmap Tool Wrapper, Workflow Engine Service"
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Please provide details about your environment.
+      value: |
+        - **OS:** [e.g., Ubuntu 22.04, macOS Sonoma, Windows 11]
+        - **Python Version:** [e.g., 3.10.4]
+        - **Docker Version:** [e.g., 24.0.5]
+        - **CyberSage Version/Commit:** [e.g., v0.1.0 or commit hash]
+        - **Browser (if applicable):** [e.g., Chrome 110]
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here (e.g., related issues, potential causes).
+    validations:
+      required: false
