@@ -1,10 +1,11 @@
-# CyberSage: Your AI-Powered Cybersecurity Co-Pilot
+# CyberSage: AI-Powered Cybersecurity Co-Pilot
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/rick1330/cybersage/.github/workflows/ci-main.yml?branch=main&style=flat-square)](https://github.com/rick1330/cybersage/actions/workflows/ci-main.yml)
 [![Code Coverage](https://img.shields.io/codecov/c/github/rick1330/cybersage?style=flat-square)](https://codecov.io/gh/rick1330/cybersage)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square)](./LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/rick1330/cybersage?style=flat-square)](https://github.com/rick1330/cybersage/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/rick1330/cybersage?style=flat-square)](https://github.com/rick1330/cybersage/stargazers)
+<!-- Add other relevant badges like version, chat, etc. -->
 
 **CyberSage integrates Large Language Models (LLMs) with standard cybersecurity tools and workflows to automate, assist, and enhance security operations.**
 
@@ -12,307 +13,261 @@
 
 ## Table of Contents
 
--   [1. Overview](#1-overview)
-    -   [What is CyberSage?](#what-is-cybersage)
-    -   [Goals](#goals)
-    -   [Core Features](#core-features)
--   [2. Quick Start](#2-quick-start)
-    -   [Prerequisites](#prerequisites)
-    -   [Installation](#installation)
-    -   [Configuration (`.env`)](#configuration-env)
-    -   [Running CyberSage](#running-cybersage)
-    -   [First Run Example](#first-run-example)
--   [3. Architecture](#3-architecture)
-    -   [High-Level Overview](#high-level-overview)
-    -   [Core Modules](#core-modules)
--   [4. Usage](#4-usage)
-    -   [Command Line Interface (CLI)](#command-line-interface-cli)
-    -   [REST API](#rest-api)
-    -   [Web Interface](#web-interface)
--   [5. Contributing](#5-contributing)
--   [6. License](#6-license)
--   [7. Contact](#7-contact)
+1.  [Overview](#1-overview)
+2.  [Features](#2-features)
+3.  [Directory Architecture](#3-directory-architecture)
+4.  [Visual Architecture](#4-visual-architecture)
+5.  [Quick Start](#5-quick-start)
+6.  [Usage](#6-usage)
+7.  [Contributing](#7-contributing)
+8.  [Documentation](#8-documentation)
+9.  [Roadmap](#9-roadmap)
+10. [License](#10-license)
+11. [Credits & Acknowledgements](#11-credits--acknowledgements)
 
 ---
 
 ## 1. Overview
 
-### What is CyberSage?
+CyberSage is an advanced platform designed to augment cybersecurity professionals by leveraging the power of Artificial Intelligence. It acts as a co-pilot, streamlining security tasks, automating repetitive analysis, and providing intelligent insights by combining LLM reasoning capabilities with the practical execution of security tools.
 
-CyberSage is an advanced platform designed to augment cybersecurity professionals by leveraging the power of Artificial Intelligence. It acts as a co-pilot, streamlining security tasks, automating repetitive analysis, and providing intelligent insights by combining LLM reasoning capabilities with the practical execution of security tools. Think of it as an intelligent assistant that can understand security goals, plan execution steps, run tools, analyze results, and manage context over complex operations.
+Built with a modular, AI-first architecture, CyberSage aims to:
 
-### Goals
-
-*   **Automate:** Reduce manual effort for routine security tasks like reconnaissance, log analysis, and basic vulnerability assessment.
-*   **Assist:** Provide support to analysts during complex investigations, threat hunting, and incident response procedures.
-*   **Enhance:** Improve overall security posture through proactive threat identification, correlation, and intelligent workflow orchestration.
-*   **Empower:** Offer a flexible and extensible framework for integrating custom tools, knowledge bases, and security workflows tailored to specific environments.
-
-### Core Features
-
-*   **AI Agent Framework:** Utilizes LLM-powered agents (built on LangChain) capable of planning, reasoning, and executing tasks using cybersecurity tools.
-*   **Integrated Security Tools:** Includes secure wrappers for standard tools like Nmap, Shodan, WHOIS, VirusTotal, with clear interfaces for adding more.
-*   **Workflow Engine:** Orchestrates sequences of tasks involving multiple tools, AI analysis steps, and conditional logic based on defined workflow schemas.
-*   **Vector Search (RAG):** Embeds security data, documentation, and past findings for context-aware AI responses and knowledge retrieval.
-*   **Multiple Interfaces:** Offers flexibility through a Command Line Interface (CLI), a comprehensive REST API, and a user-friendly Web UI.
-*   **Microservices Architecture:** Designed for scalability, resilience, and independent development/deployment of components.
-*   **Persistent Memory & Context:** Maintains conversational context and state for AI agents across interactions using backend stores like Redis.
-*   **Extensibility:** Provides SDKs (Python, JavaScript, WASM planned) for developing and integrating custom plugins, tools, and runtimes.
-*   **Platform Services:** Includes foundational services for identity management, configuration, billing/usage tracking, telemetry, and more.
-*   **Task Queue:** Leverages Celery for handling background jobs, scheduled tasks (e.g., periodic scans), and asynchronous processing.
+*   **Automate** routine security tasks like reconnaissance and log analysis.
+*   **Assist** analysts during complex investigations and incident response.
+*   **Enhance** security posture through proactive threat identification and workflow orchestration.
+*   **Empower** teams with a flexible framework for integrating custom tools and knowledge.
 
 ---
 
-## 2. Quick Start
+## 2. Features
 
-Follow these steps to get a local instance of CyberSage running.
+CyberSage offers a range of features designed for modern security operations:
 
-### Prerequisites
+**AI & Agents:**
 
-*   **Git:** For cloning the repository. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-*   **Python:** Version 3.9 or higher (check with `python --version`). [Install Python](https://www.python.org/downloads/)
-*   **Docker & Docker Compose:** Required for running the platform's containerized dependencies (Redis, Vector DB) and the application itself. [Install Docker](https://docs.docker.com/get-docker/)
-*   **API Keys & Credentials:**
-    *   `OPENAI_API_KEY`: **Required** for core LLM functionality. Get from [OpenAI](https://platform.openai.com/api-keys).
-    *   `SHODAN_API_KEY`: Optional, needed for the Shodan tool. Get from [Shodan](https://account.shodan.io/register).
-    *   `VIRUSTOTAL_API_KEY`: Optional, needed for the VirusTotal tool. Get from [VirusTotal](https://developers.virustotal.com/reference).
-    *   *(Review `.env.example` or `.env.template` for all potential keys)*
+*   **🤖 AI Agent Framework:** Leverages LLM-powered agents (based on LangChain) capable of planning, reasoning, and executing complex tasks.
+*   **🧠 Contextual Memory:** Persistent memory (Redis backend) allows agents to maintain context across long-running tasks and conversations.
+*   **💡 Prompt Engineering:** Optimized prompts tailored for cybersecurity tasks ensure accurate and relevant AI responses.
+*   **🔗 Chain & Workflow Building:** Tools for constructing sequences of LLM calls and tool executions (`core/chain_builder.py`).
 
-### Installation
+**Tooling & Execution:**
 
-1.  **Clone the Repository:**
+*   **🛠️ Integrated Security Tools:** Secure wrappers for standard tools like Nmap, Shodan, WHOIS, VirusTotal, etc. (`tools/`).
+*   **🏃 Sandboxed Runtimes:** Dedicated execution environments for different tool categories (network scanning, forensics) enhance security and resource management (`tool-execution-runtimes/`).
+*   **🔌 Extensible Tooling:** SDKs and clear interfaces for adding custom tools and plugins (`plugins/sdk/`).
+
+**Workflows & Orchestration:**
+
+*   **⚙️ Workflow Engine:** A dedicated service (`core-services/workflow-engine-svc/`) orchestrates complex, multi-step security workflows defined in structured formats (`workflows/`).
+*   **🔄 Background Task Processing:** Uses Celery (`tasks/`) for handling asynchronous jobs and scheduling recurring tasks (e.g., periodic scans, report generation).
+
+**Data Handling & Knowledge:**
+
+*   **💾 Vector Store Integration:** Utilizes vector databases (e.g., pgvector) for Retrieval-Augmented Generation (RAG), allowing AI to access relevant security knowledge (`services/vectorstore_service.py`).
+*   **📜 Structured Logging:** Centralized and structured logging service (`services/logging_service.py`) with support for different levels and outputs (file, console, potentially remote).
+*   **🔍 Audit Logging:** Dedicated service (`core-services/audit-log-svc/`) for tracking significant actions and events within the platform.
+
+**Interfaces & Platform:**
+
+*   **💻 Command Line Interface (CLI):** Provides quick access to core functionalities for scripting and terminal users (`interfaces/cli.py`).
+*   **🌐 REST API:** A comprehensive FastAPI backend (`interfaces/api/`) exposed via an API Gateway (`api-gateway/`) for programmatic interaction.
+*   **🖥️ Web Interface:** A user-friendly UI (`ui-web/`) for managing agents, building workflows, viewing results, and chat interaction.
+*   **📱 Mobile Interface:** Companion mobile app (`ui-mobile/`) for on-the-go access (details TBD).
+*   **🧩 Microservices Architecture:** Scalable and resilient design with distinct core and platform services.
+*   **☁️ Infrastructure as Code (IaC):** Terraform and Helm configurations (`infra/`) for repeatable deployments across environments.
+*   **🤝 Shared Components:** Common libraries, data contracts, and type definitions (`shared/`) ensure consistency across the platform.
+
+---
+
+## 3. Directory Architecture
+
+The project follows a modular structure:
+
+*   `rick1330-cybersage/`
+    *   `.github/`: CI/CD workflows, issue templates
+    *   `api-gateway/`: NestJS API Gateway service
+    *   `configs/`: Application configuration files (settings, logging)
+    *   `core/`: Core AI agent logic, prompts, context management
+    *   `core-services/`: Specialized backend services (Workflow Engine, Audit Log)
+    *   `docs/`: Detailed documentation (Architecture, Guides)
+    *   `infra/`: Infrastructure as Code (Terraform, Helm)
+    *   `interfaces/`: Backend API (FastAPI) and CLI definitions
+    *   `legal/`: Legal documents (License, Privacy Policy)
+    *   `platform-services/`: Cross-cutting platform services (Identity, Config)
+    *   `plugins/`: SDKs for extending CyberSage
+    *   `scripts/`: Utility and operational scripts
+    *   `services/`: Foundational backend services (OpenAI, DBs, Logging)
+    *   `shared/`: Shared code, schemas, types across services
+    *   `tasks/`: Celery background tasks definitions
+    *   `tests/`: Automated tests (unit, integration, e2e, etc.)
+    *   `tool-execution-runtimes/`: Sandboxed environments for tool execution
+    *   `tools/`: Wrappers for external cybersecurity tools
+    *   `ui-mobile/`: Mobile application source
+    *   `ui-web/`: Web application source
+    *   `workflows/`: Definitions for automated workflows
+    *   `.env.template`: Environment variable template
+    *   `Dockerfile`: Production Docker build definition
+    *   `docker-compose.yml`: Docker Compose for local development
+    *   `requirements.txt`: Python dependencies
+    *   `README.md`: This file
+
+---
+
+
+
+## 4. Visual Architecture
+
+CyberSage employs a microservices architecture where user interfaces interact with backend services via an API Gateway. The core logic orchestrates AI agents, tools, and data services to perform cybersecurity tasks.
+
+*(A detailed diagram can be found in `/docs/architecture.md`. The basic flow is: User Interface -> API Gateway -> Backend API -> Core Logic / Services -> Data Stores / External Tools / LLM API)*
+
+---
+
+## 5. Quick Start
+
+Get CyberSage running locally for development or testing.
+
+**Prerequisites:**
+
+*   Git
+*   Python 3.9+
+*   Docker & Docker Compose
+*   Required API Keys (OpenAI minimum, others optional) - see `README.md#prerequisites` for details.
+
+**Steps:**
+
+1.  **Clone the repository:**
     ```bash
     git clone https://github.com/rick1330/cybersage.git
     cd cybersage
     ```
 
-2.  **Set up a Python Virtual Environment (Recommended):**
+2.  **Set up Python Environment & Install Dependencies:**
     ```bash
-    # Create a virtual environment named 'venv'
+    # Create and activate a virtual environment (recommended)
     python -m venv venv
-    # Activate it (syntax varies by OS/shell)
-    # Linux/macOS (bash/zsh)
-    source venv/bin/activate
-    # Windows (Command Prompt)
-    # venv\Scripts\activate.bat
-    # Windows (PowerShell)
-    # venv\Scripts\Activate.ps1
-    ```
+    source venv/bin/activate # Or .\venv\Scripts\activate on Windows
 
-3.  **Install Python Dependencies:**
-    ```bash
+    # Install dependencies
     pip install -r requirements.txt
     ```
 
-### Configuration (`.env`)
-
-Sensitive configuration and API keys are managed via environment variables loaded from a `.env` file.
-
-1.  **Create `.env` from the template:**
+3.  **Configure Environment Variables:**
     ```bash
+    # Copy the template
     cp .env.template .env
-    # Or use: cp .env.example .env (if .env.template doesn't exist)
+
+    # Edit the .env file with your editor and add your API keys/secrets
+    # Example: nano .env
     ```
-
-2.  **Edit the `.env` file:**
-    Open the newly created `.env` file in your text editor and fill in the required values, especially your API keys.
-
+    *Minimum required:*
     ```dotenv
-    # .env Example Snippet
     OPENAI_API_KEY=<YOUR_OPENAI_KEY_HERE>
-    OPENAI_ORG_ID=<YOUR_OPENAI_ORG_ID_HERE> # Optional
-
-    REDIS_URL=redis://redis:6379 # Default for docker-compose
-
-    # Security - CHANGE THESE TO STRONG, UNIQUE SECRETS
-    JWT_SECRET=replace-with-a-very-strong-random-string-for-jwt
-    ENCRYPTION_KEY=replace-with-a-different-strong-random-string-for-encryption
-
-    # External APIs (Optional but recommended for full functionality)
-    SHODAN_API_KEY=<YOUR_SHODAN_KEY_HERE>
-    VIRUSTOTAL_API_KEY=<YOUR_VIRUSTOTAL_KEY_HERE>
-    ALIENTVAULT_API_KEY=<YOUR_ALIENVAULT_KEY_HERE>
-
-    # Monitoring (Optional)
-    SENTRY_DSN=
-    ELASTIC_APM_SERVER_URL=
-
-    # Development Settings (Defaults are usually fine for local dev)
-    DEBUG=true
-    ENVIRONMENT=development
-    LOG_LEVEL=DEBUG
+    JWT_SECRET=<generate_a_strong_random_secret>
+    ENCRYPTION_KEY=<generate_a_different_strong_random_secret>
     ```
+    *(Fill in other keys like `SHODAN_API_KEY`, `VIRUSTOTAL_API_KEY` for full tool functionality)*
 
-    **Security Warning:** Never commit your `.env` file to version control. The `.gitignore` file should already prevent this. Ensure `JWT_SECRET` and `ENCRYPTION_KEY` are cryptographically strong random strings.
-
-### Running CyberSage
-
-CyberSage uses Docker Compose to orchestrate its services for local development.
-
-1.  **Build and Start Services:**
-    From the project root directory:
+4.  **Run Services with Docker Compose:**
     ```bash
     docker-compose up --build -d
     ```
-    *   `--build`: Forces Docker to rebuild images if the Dockerfiles have changed.
-    *   `-d`: Runs the containers in detached mode (in the background).
+    *(This starts the API, Redis, Vector DB, etc.)*
 
-2.  **Verify Services are Running:**
+5.  **First Run Example (CLI):**
     ```bash
-    docker-compose ps
-    ```
-    You should see services like `api`, `redis`, `vector-db` listed with state `Up` or `running`.
-
-3.  **View Logs (Optional):**
-    ```bash
-    docker-compose logs -f api # Follow logs for the API service
-    ```
-    ```bash
-    docker-compose logs # View logs for all services
+    # Ensure venv is active
+    python interfaces/cli.py investigate --query "WHOIS lookup for google.com" --tools whois
     ```
 
-4.  **Stopping Services:**
+---
+
+## 6. Usage
+
+Interact with CyberSage via its different interfaces:
+
+*   **CLI (`interfaces/cli.py`):** For quick tasks and scripting.
     ```bash
-    docker-compose down
+    # Example: Basic Nmap scan
+    python interfaces/cli.py scan --target scanme.nmap.org --scan-type basic
     ```
-    This stops and removes the containers defined in `docker-compose.yml`. Add `-v` to also remove associated volumes (data).
+*   **REST API (`interfaces/api/` via Gateway):** For programmatic integration. Default local URL: `http://localhost:8000`.
+    ```bash
+    # Example: Execute a task via API (replace <YOUR_JWT>)
+    curl -X POST http://localhost:8000/api/v1/tasks \
+         -H "Content-Type: application/json" \
+         -H "Authorization: Bearer <YOUR_JWT>" \
+         -d '{ "task_id": "api-scan-01", "agent_id": "default_scanner", "task": "Scan 192.168.1.1 for open web ports", "parameters": {"target": "192.168.1.1", "ports": "80,443,8080"} }'
+    ```
+*   **Web UI (`ui-web/`):** Graphical interface for workflows, agents, and results. Access via its configured URL (e.g., `http://localhost:3000`).
 
-### First Run Example
+**Example Use Cases:**
 
-With the services running via Docker Compose, you can interact with CyberSage.
-
-**Example: Use the CLI to perform a WHOIS lookup:**
-
-```bash
-# Ensure your virtual environment is activated (source venv/bin/activate)
-# The CLI interacts with the running API service
-python interfaces/cli.py investigate --query "Get WHOIS information for example.com" --tools whois
-```
-
-This command uses the `investigate` function of the CLI, specifies a natural language query, and restricts the agent to using only the `whois` tool. The CLI will communicate with the backend API running in Docker to execute this task.
-
----
-
-## 3. Architecture
-
-### High-Level Overview
-
-CyberSage utilizes a microservices architecture designed for modularity and scalability. The main functional areas are:
-
-1.  **User Interfaces:** Provide interaction points for users (CLI, Web UI, Mobile UI). Located in `/interfaces`, `/ui-web`, `/ui-mobile`.
-2.  **API Layer:** Acts as the entry point for requests. Includes an API Gateway (`/api-gateway`) for routing, authentication, and potentially GraphQL/WebSockets, and the core Backend API (`/interfaces/api`) built with FastAPI.
-3.  **Core Logic:** Contains the central intelligence of CyberSage (`/core`). This includes the Agent Manager, Prompt Templates, Chain Builder, and Context Manager, leveraging LangChain.
-4.  **Core Services:** Specialized backend services essential for platform operations, such as the Workflow Engine (`/core-services/workflow-engine-svc`) and Audit Log Service (`/core-services/audit-log-svc`).
-5.  **Foundational Services:** General-purpose backend support services (`/services`) like interfaces to OpenAI, the vector store, agent memory (Redis), and logging.
-6.  **Platform Services:** Handle cross-cutting concerns like identity, configuration, billing, and telemetry (`/platform-services`).
-7.  **Tooling:** Includes wrappers for external security tools (`/tools`) and dedicated runtimes for their execution (`/tool-execution-runtimes`).
-8.  **Data Stores:** Persistent storage including Redis (for caching and memory) and PostgreSQL with pgvector (for vector embeddings).
-9.  **Background Processing:** A task queue system (Celery, `/tasks`) for handling asynchronous jobs and scheduled tasks.
-10. **Shared Components:** Common code, schemas, and definitions located in `/shared`.
-11. **Infrastructure:** Infrastructure-as-Code using Terraform and Helm (`/infra`).
-
-*(For a more detailed breakdown and data flow diagrams, please refer to `docs/architecture.md` - to be generated)*
-
-### Core Modules
-
-*   `/core`: AI agent logic, prompts, context management.
-*   `/tools`: Wrappers for cybersecurity tools (Nmap, Shodan, etc.).
-*   `/services`: Interfaces for LLMs, memory, vector storage, logging.
-*   `/interfaces`: API, CLI definitions.
-*   `/core-services`: Workflow engine, audit logging.
-*   `/platform-services`: Identity, configuration, billing, telemetry.
-*   `/ui-web` & `/ui-mobile`: Frontend applications.
-*   `/infra`: Infrastructure as Code (Terraform, Helm).
-*   `/shared`: Common libraries, schemas, types.
-
+*   Automated reconnaissance on a target domain.
+*   Vulnerability scanning and analysis.
+*   Log summarization and anomaly detection.
+*   Threat intelligence gathering on IPs, domains, or hashes.
+*   Guided incident response steps.
 
 ---
 
-## 4. Usage
+## 7. Contributing
 
-Interact with CyberSage through its various interfaces:
+We welcome contributions! Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) guide to understand our development process, branching model (`develop` branch is primary), coding standards, and how to submit pull requests.
 
-### Command Line Interface (CLI)
-
-Ideal for quick tasks, scripting, and terminal-based workflows.
-
-**Example: Scan a target using Nmap via the CLI agent**
-*(Assumes CLI is properly installed/configured)*
-
-```bash
-# Ensure venv is active: source venv/bin/activate
-python interfaces/cli.py scan --target <TARGET_IP_OR_HOSTNAME> --scan-type service
-```
-**Example: Ask the investigation agent a question**
-```bash
-python interfaces/cli.py investigate --query "What are the known vulnerabilities for Apache Struts version 2.3.34?" --tools shodan virustotal
-*See `/interfaces/cli.md` for detailed CLI command reference.* (*to be generated*)
-```
-### REST API
-
-The most flexible way to integrate CyberSage into other applications or custom scripts. The API is served by the FastAPI backend, typically accessible via the API Gateway running in Docker (`http://localhost:8000` by default in `docker-compose.yml`).
-
-**Example: Create a new agent via API (Replace <YOUR_JWT>)**
-
-```bash
-curl -X POST http://localhost:8000/api/v1/agents \
-     -H "Content-Type: application/json" \
-     -H "Authorization: Bearer <YOUR_JWT>" \
-     -d '{
-           "agent_id": "my_custom_scanner",
-           "agent_type": "security_scanner",
-           "tools": ["nmap_tool", "whois_tool"],
-           "options": { "default_nmap_args": "-T4 -A" }
-         }'
-
-```
-**Example: Execute a task using the created agent (Replace <YOUR_JWT>)**
-
-```bash
-     curl -X POST http://localhost:8000/api/v1/tasks \
-     -H "Content-Type: application/json" \
-     -H "Authorization: Bearer <YOUR_JWT>" \
-     -d '{
-           "task_id": "my_task_123",
-           "agent_id": "my_custom_scanner",
-           "task": "Perform a comprehensive scan including OS and service detection on 10.0.1.5",
-           "parameters": { "target": "10.0.1.5" }
-         }'
-```
-*See `/interfaces/api/README.md` and related API documentation for details.* (*to be generated*)
-
-### Web Interface
-
-Provides a graphical interface for managing agents, building/running workflows, viewing results, and interacting conversationally.
-
-1.  **Access:** Navigate your browser to the URL where the `ui-web` service is hosted (e.g., `http://localhost:3000` if running separately or as per deployment configuration).
-2.  **Login:** Authenticate using the configured identity provider.
-3.  **Explore:** Use the navigation menus to access dashboards, agent chat, workflow builder, etc.
-
-*See `/ui-web/README.md` for web UI specifics.* (*to be generated*)
+*   Report bugs or request features via [GitHub Issues](https://github.com/rick1330/cybersage/issues).
+*   Propose changes via Pull Requests against the `develop` branch.
 
 ---
 
-## 5. Contributing
+## 8. Documentation
 
-Contributions are welcome! Whether it's reporting bugs, suggesting features, improving documentation, or submitting code changes, please refer to our contribution guidelines.
+Detailed documentation beyond this README can be found in the `/docs` directory, including:
 
-*   **Contribution Guidelines:** [CONTRIBUTING.md](./CONTRIBUTING.md)
-*   **Code of Conduct:** [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
-*   **Issue Tracker:** [GitHub Issues](https://github.com/rick1330/cybersage/issues)
+*   `/docs/architecture.md`: In-depth architecture diagrams and explanations.
+*   `/docs/security_model.md`: Threat model and security considerations.
+*   `/docs/developer_guide/`: Guides for developing specific components.
+*   API Reference (potentially generated from OpenAPI spec).
 
----
-
-## 6. License
-
-CyberSage is licensed under the Apache License Version 2.0. See the [LICENSE](./LICENSE) file for the full license text.
+*(Links to hosted documentation can be added here if available)*
 
 ---
 
-## 7. Contact
+## 9. Roadmap
 
-*   **Maintainers:** [Rick](https://github.com/rick1330)
-*   **Project Repository:** [https://github.com/rick1330/cybersage](https://github.com/rick1330/cybersage)
-*   **Reporting Security Issues:** Please follow the instructions in [SECURITY.md](./SECURITY.md).
+This is a high-level overview of planned features and improvements (subject to change):
 
-  
+*   **More Tool Integrations:** Metasploit, OSINT tools, Cloud security scanners.
+*   **Advanced Workflow Capabilities:** Conditional logic, parallel execution, human-in-the-loop steps.
+*   **Enhanced RAG:** Fine-tuning embeddings, integrating more diverse knowledge sources.
+*   **Improved UI/UX:** Visual workflow editor enhancements, better results visualization.
+*   **Multi-LLM Support:** Allow configuration of different LLM providers/models.
+*   **Reporting Module:** Automated generation of security assessment reports.
+*   **Compliance Workflows:** Pre-defined workflows for common compliance checks (e.g., CIS Benchmarks).
+*   **Performance Optimizations:** Caching strategies, asynchronous processing improvements.
+
+---
+
+## 10. License
+
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](./LICENSE) file for the full license text.
+
+---
+
+## 11. Credits & Acknowledgements
+
+CyberSage builds upon the capabilities of many fantastic open-source projects and services, including:
+
+*   [LangChain](https://github.com/langchain-ai/langchain) for the core LLM agent and chain framework.
+*   [FastAPI](https://fastapi.tiangolo.com/) for the Python backend API.
+*   [NestJS](https://nestjs.com/) for the API Gateway.
+*   [OpenAI](https://openai.com/) for the underlying Large Language Models.
+*   [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/) for containerization.
+*   [Redis](https://redis.io/) for caching and message brokering.
+*   [PostgreSQL](https://www.postgresql.org/) & [pgvector](https://github.com/pgvector/pgvector) for vector storage.
+*   [Celery](https://docs.celeryq.dev/) for background tasks.
+*   Inspiration from projects like AutoGPT and BabyAGI.
+*   The developers of the integrated security tools (Nmap, Shodan, etc.).
+
+We thank the open-source community and all contributors.
