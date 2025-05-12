@@ -225,6 +225,7 @@ CyberSage utilizes a microservices architecture designed for modularity and scal
 *   `/infra`: Infrastructure as Code (Terraform, Helm).
 *   `/shared`: Common libraries, schemas, types.
 
+
 ---
 
 ## 4. Usage
@@ -235,21 +236,25 @@ Interact with CyberSage through its various interfaces:
 
 Ideal for quick tasks, scripting, and terminal-based workflows.
 
-# Example: Scan a target using Nmap via the CLI agent
-# (Assumes CLI is properly installed/configured)
+**Example: Scan a target using Nmap via the CLI agent**
+*(Assumes CLI is properly installed/configured)*
+
+```bash
 # Ensure venv is active: source venv/bin/activate
 python interfaces/cli.py scan --target <TARGET_IP_OR_HOSTNAME> --scan-type service
-
-# Example: Ask the investigation agent a question
+```
+**Example: Ask the investigation agent a question**
+```bash
 python interfaces/cli.py investigate --query "What are the known vulnerabilities for Apache Struts version 2.3.34?" --tools shodan virustotal
-
 *See `/interfaces/cli.md` for detailed CLI command reference.* (*to be generated*)
-
+```
 ### REST API
 
 The most flexible way to integrate CyberSage into other applications or custom scripts. The API is served by the FastAPI backend, typically accessible via the API Gateway running in Docker (`http://localhost:8000` by default in `docker-compose.yml`).
 
-# Example: Create a new agent via API (Replace <YOUR_JWT>)
+**Example: Create a new agent via API (Replace <YOUR_JWT>)**
+
+```bash
 curl -X POST http://localhost:8000/api/v1/agents \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer <YOUR_JWT>" \
@@ -259,8 +264,12 @@ curl -X POST http://localhost:8000/api/v1/agents \
            "tools": ["nmap_tool", "whois_tool"],
            "options": { "default_nmap_args": "-T4 -A" }
          }'
-# Example: Execute a task using the created agent (Replace <YOUR_JWT>)
-curl -X POST http://localhost:8000/api/v1/tasks \
+
+```
+**Example: Execute a task using the created agent (Replace <YOUR_JWT>)**
+
+```bash
+     curl -X POST http://localhost:8000/api/v1/tasks \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer <YOUR_JWT>" \
      -d '{
@@ -269,6 +278,7 @@ curl -X POST http://localhost:8000/api/v1/tasks \
            "task": "Perform a comprehensive scan including OS and service detection on 10.0.1.5",
            "parameters": { "target": "10.0.1.5" }
          }'
+```
 *See `/interfaces/api/README.md` and related API documentation for details.* (*to be generated*)
 
 ### Web Interface
