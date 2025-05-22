@@ -6,7 +6,7 @@ The CyberSage team takes security seriously. We appreciate your efforts to respo
 
 1.  [Reporting a Vulnerability](#1-reporting-a-vulnerability)
 2.  [Supported Versions](#2-supported-versions)
-3.  [Threat Model Overview](#3-threat-model-overview)
+3.  [Threat Model Overview & Security Architecture](#3-threat-model-overview--security-architecture)
 4.  [Security Mitigations & Practices](#4-security-mitigations--practices)
 
 ---
@@ -67,39 +67,33 @@ Security updates are typically applied only to the most recent stable release br
 
 ---
 
-## 3. Threat Model Overview
+## 3. Threat Model Overview & Security Architecture
 
-CyberSage interacts with potentially sensitive data, executes external tools, and relies on AI models. Key areas considered in our threat model include:
+CyberSage interacts with potentially sensitive data, executes external tools, and relies on AI models. A comprehensive discussion of our threat model, security architecture, data security practices, and mitigations is detailed in our main security documentation:
 
-*   **Input Injection:** Malicious inputs provided to the API, CLI, or UI intended to manipulate AI prompts, tool commands, or database queries (e.g., prompt injection, command injection).
-*   **Tool Execution Security:** Vulnerabilities in the wrappers or runtimes for external tools (e.g., Nmap, Shodan) leading to unintended system access or information disclosure. Escape vulnerabilities from sandboxed environments.
-*   **Authentication & Authorization:** Bypassing authentication mechanisms or escalating privileges within the platform's services (API Gateway, Backend API, Platform Services).
-*   **Data Security:** Unauthorized access to or leakage of sensitive data stored by the platform (e.g., API keys in configuration, agent memory in Redis, vector embeddings, audit logs).
-*   **AI Model Security:** Adversarial attacks against the LLM, data poisoning of the vector store, or extraction of sensitive information through model interaction.
-*   **Dependency Vulnerabilities:** Security flaws in third-party libraries or base Docker images used by the project.
-*   **Infrastructure Security:** Misconfigurations in cloud resources (managed via Terraform) or Kubernetes deployments (managed via Helm).
-*   **Denial of Service (DoS):** Overloading services through excessive API requests, complex AI tasks, or resource-intensive tool executions.
+**➡️ [CyberSage Security Model & Architecture](/docs/src/security/README.md)**
 
-*(A more detailed threat model may reside in `/docs/security_model.md`)*
-
----
+Key areas considered include:
+*   Input Injection (Prompt Injection, Command Injection)
+*   Tool Execution Security & Sandbox Escapes
+*   Authentication & Authorization Bypass
+*   Data Security & Leakage (at rest, in transit, via LLMs)
+*   AI Model Security (Adversarial Attacks, Data Poisoning)
+*   Dependency Vulnerabilities
+*   Infrastructure Security
+*   Denial of Service
 
 ## 4. Security Mitigations & Practices
 
-We employ various strategies to mitigate security risks:
-
-*   **Input Sanitization:** Inputs to tools and potentially sensitive API endpoints are validated and sanitized.
-*   **Tool Sandboxing:** Exploring the use of dedicated, potentially containerized runtimes (`tool-execution-runtimes/`) to isolate tool execution. Timeouts and resource limits are applied.
-*   **Secure Authentication:** Utilizing standard authentication protocols (e.g., JWT) via dedicated identity services (`platform-services/identity-svc/`).
-*   **Authorization Checks:** Implementing role-based or permission-based access control within services.
-*   **Secrets Management:** Using environment variables (`.env`) and potentially integrating with dedicated secrets management solutions (like HashiCorp Vault or cloud provider secrets managers) instead of hardcoding credentials. `.gitleaks` and `.git-secrets` are used to prevent accidental commits.
-*   **Dependency Scanning:** Using tools like Dependabot (`.github/dependabot.yml`) and potentially `pip-audit` or `npm audit` to identify vulnerable dependencies.
-*   **Static Analysis (SAST):** Using tools like CodeQL (`.github/workflows/codeql-analysis.yml`) to find potential security flaws in the codebase.
-*   **Dynamic Analysis (DAST/IAST):** Incorporating DAST/IAST scanning in CI/CD pipelines (`.github/workflows/security-dast-iast.yml`).
-*   **Rate Limiting:** Implementing rate limiting at the API Gateway or backend API level to prevent abuse.
-*   **HTTPS Enforcement:** Ensuring encrypted communication for web interfaces and APIs in production deployments.
-*   **Infrastructure Security:** Following best practices for IaC security (e.g., least privilege IAM roles, secure network configurations).
-*   **Regular Audits & Testing:** Performing periodic security reviews and potentially penetration testing (`tests/security/`).
-*   **Responsible AI Practices:** Implementing safeguards against prompt injection where possible and being mindful of potential biases or harmful content generation (though primary focus is on tool execution security).
+Our strategies for mitigating security risks are detailed in the **[CyberSage Security Model & Architecture](/docs/src/security/README.md)** document. These include, but are not limited to:
+*   Input Sanitization & Validation
+*   Tool Sandboxing & Secure Runtimes
+*   Strong Authentication & Authorization (JWT, RBAC)
+*   Secrets Management & Encryption
+*   Dependency Scanning & SAST/DAST
+*   Rate Limiting & HTTPS Enforcement
+*   Secure Infrastructure (IaC)
+*   Regular Audits & Testing
 
 We are continuously working to improve the security posture of CyberSage.
+```

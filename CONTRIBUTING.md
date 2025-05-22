@@ -308,6 +308,9 @@ Good documentation is essential for usability and maintainability.
 *   **Code Comments:** Use docstrings (Google or NumPy style for Python) for all public modules, classes, and functions. Add inline comments only for complex or non-obvious logic sections.
 *   **READMEs:** Update the main `README.md` or relevant subdirectory `README.md` files if your changes affect installation, configuration, usage, or architecture.
 *   **`/docs` Directory:** For significant features or architectural changes, consider adding or updating detailed documentation in the `/docs` directory (e.g., architecture diagrams, design decisions/ADRs, usage guides).
+    *   The project uses Docusaurus for its official documentation, hosted in the `/docs` directory and viewable via [Link to Docs Site - Placeholder].
+    *   The documentation is structured into sections including: Introduction, Architecture, Security, Developer Guide, User Guide, API Reference, Operations Guide, and Contributing. Please place new documentation in the appropriate section.
+    *   When documenting new components (modules, services, classes), please follow the template provided in `docs/src/templates/COMPONENT_TEMPLATE.md`. This template is based on the detailed documentation for components like the Agent Manager.
 *   **API Documentation:** Ensure OpenAPI schemas (`interfaces/api/schemas.py`) and endpoint definitions (`interfaces/api/routes.py`) are updated for API changes. Documentation might be auto-generated from this.
 
 ---
